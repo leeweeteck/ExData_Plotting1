@@ -1,6 +1,6 @@
 library(data.table)
 
-# read in the data
+# read in the data (assumes data is in the same directory)
 dataFile <- "household_power_consumption.txt"
 data <- fread(dataFile, colClasses = c(rep("character", 8), "numeric"))
 

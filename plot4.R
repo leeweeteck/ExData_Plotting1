@@ -1,6 +1,6 @@
 library(data.table)
 
-# read in the data
+# read in the data (assumes data is in the same directory)
 dataFile <- "household_power_consumption.txt"
 data <- fread(dataFile, colClasses = c(rep("character", 8), "numeric"))
 
@@ -20,8 +20,16 @@ any(is.na(plotData))  # no NA values found
 plotData[, timeStamp := 
            as.POSIXct(paste(Date, Time), format = "%Y-%m-%d %H:%M:%S")]
 
+
+
+# plot & save a copy of the graphs to a PNG file
+png("plot4.png", width = 480, height = 480, units = 'px')
+
 # create a 2x2 grid for plotting
 par(mfrow = c(2, 2))
+
+# set the figure margins
+par(mar = c(4, 4, 2, 2))
 
 # plot the top-left graph
 plot(plotData$timeStamp, as.numeric(plotData$Global_active_power),
@@ -46,7 +54,5 @@ legend("topright", bty = 'n',
 plot(plotData$timeStamp, as.numeric(plotData$Global_reactive_power),
      type = "l", ylab = "Global Reactive Power", xlab = "datetime")
 
-# save a copy of the graphs to a PNG file
-dev.copy(png, "plot3.png", width = 480, height = 480, units = 'px')
 dev.off()
 
